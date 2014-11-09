@@ -8,6 +8,7 @@
   {% set logstash_servers = logstash_servers + ['{0}:{1}'.format(ip_addrs[0], lumberjack_port)] %}
 {% endfor %}
 {% set conf_list = salt['pillar.get']('logstash-forwarder:extra_configs', []) %}
+{% set logstash_timeout = salt['pillar.get']('logstash-forwarder:logstash_timeout', 15) %}
 
 setup_lumberjack_pkg_repo:
   pkgrepo.managed:
@@ -47,6 +48,10 @@ base_config:
   file.managed:
     - name: /etc/logstash-forwarder/logstash_connection.conf
     - source: salt://logstash/files/lumberjack.conf
+    - template: jinja
+    - context:
+        logstash_servers: {{ logstash_servers }}
+        logstash_timeout: {{ logstash_timeout }}
     - require:
         - file: lumberjack_conf_dir
 
