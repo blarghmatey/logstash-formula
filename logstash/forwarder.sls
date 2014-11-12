@@ -32,13 +32,13 @@ lumberjack_conf_dir:
     - name: /etc/logstash-forwarder/ssl
     - makedirs: True
 
-ssl_key:
+lumberjack_ssl_key:
   file.managed:
     - name: /etc/logstash-forwarder/ssl/logstash-forwarder.key
     - contents_pillar: logstash-forwarder:ssl_key
     - makedirs: True
 
-ssl_cert:
+lumberjack_ssl_cert:
   file.managed:
     - name: /etc/logstash-forwarder/ssl/logstash-forwarder.crt
     - contents_pillar: logstash-forwarder:ssl_cert

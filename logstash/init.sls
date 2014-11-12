@@ -46,13 +46,13 @@ logstash_config:
 {% endfor %}
 
 {% if use_lumberjack %}
-ssl_key:
+lumberjack_logstash_ssl_key:
   file.managed:
     - name: /etc/logstash-forwarder/ssl/logstash-forwarder.key
     - contents_pillar: logstash-forwarder:ssl_key
     - makedirs: True
 
-ssl_cert:
+lumberjack_logstash_ssl_cert:
   file.managed:
     - name: /etc/logstash-forwarder/ssl/logstash-forwarder.crt
     - contents_pillar: logstash-forwarder:ssl_cert
