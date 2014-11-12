@@ -5,7 +5,7 @@
 {% set lumberjack_port = salt['pillar.get']('logstash-forwarder:port', 7000) %}
 {% set logstash_servers = [] %}
 {% for id, ip_addrs in salt['mine.get']('roles:logstash', 'network.ip_addrs', expr_form='grain').items() %}
-  {% set logstash_servers = logstash_servers + ['{0}:{1}'.format(ip_addrs[0], lumberjack_port)] %}
+  {% do logstash_servers.append('{0}:{1}'.format(ip_addrs[0], lumberjack_port)) %}
 {% endfor %}
 {% set conf_list = salt['pillar.get']('logstash-forwarder:extra_configs', []) %}
 {% set logstash_timeout = salt['pillar.get']('logstash-forwarder:logstash_timeout', 15) %}
