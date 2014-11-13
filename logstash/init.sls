@@ -27,6 +27,7 @@ logstash_config:
   file.managed:
     - name: /etc/logstash/conf.d/default.conf
     - source: salt://logstash/files/logstash.conf
+    - template: jinja
     - context:
         use_lumberjack: {{ use_lumberjack }}
         lumberjack_port: {{ lumberjack_port }}
@@ -37,9 +38,13 @@ logstash_config:
 {{ config.name }}:
   file.managed:
     - name: /etc/logstash/conf.d/{{ config.name }}.conf
+    - template: jinja
     - source: {{ config.source }}
     {% if config.get('source_hash') %}
     - source_hash: {{ config.source_hash }}
+    {% endif %}
+    {% if config.get('context') %}
+    context: {{ config.context }}
     {% endif %}
     - watch_in:
         - service: logstash_service
