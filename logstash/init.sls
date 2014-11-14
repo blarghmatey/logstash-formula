@@ -33,6 +33,9 @@ logstash_config:
         lumberjack_port: {{ lumberjack_port }}
         use_syslog: {{ salt['pillar.get']('logstash:syslog_input', True) }}
         elasticsearch_output: {{ salt['pillar.get']('logstash:elasticsearch_output', True) }}
+        elasticsearch_http_output: {{ salt['pillar.get']('logstash:elasticsearch_http_output', False) }}
+        elasticsearch_http_host: {{ salt['pillar.get']('logstash:elasticsearch_http_host') }}
+        elasticsearch_http_port: {{ salt['pillar.get']('logstash:elasticsearch_http_port', 9200) }}
         syslog_port: {{ salt['pillar.get']('logstash:syslog_port', 2000) }}
 
 {% for config in conf_list %}
