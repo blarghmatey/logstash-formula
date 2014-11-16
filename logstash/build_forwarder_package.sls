@@ -47,6 +47,5 @@ move_package:
   file.managed:
     - name: {{ file_root }}/built_packages/logstash-forwarder.{{ package_type }}
     - source: /tmp/logstash-forwarder/{{ package_filename }}
-    - source_hash: {{ salt['cmd.run']('md5sum /tmp/logstash-forwarder/{0}'.format(package_filename)) }}
     - require:
         - cmd: package_forwarder
