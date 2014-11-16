@@ -17,7 +17,9 @@ packaging_reqs:
     - pkgs: {{ logstash.forwarder_pkging_deps }}
 
 fpm:
-  gem.installed
+  gem.installed:
+    - require:
+        - pkg: packaging_reqs
 
 forwarder_src:
   git.latest:
@@ -49,3 +51,4 @@ move_package:
     - source: /tmp/logstash-forwarder/{{ package_filename }}
     - require:
         - cmd: package_forwarder
+    - makedirs: True
