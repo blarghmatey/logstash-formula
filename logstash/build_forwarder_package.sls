@@ -24,19 +24,29 @@ forwarder_src:
     - name: https://github.com/elasticsearch/logstash-forwarder
     - rev: {{ git_rev }}
     - target: /tmp
+    - require:
+        - pkg: packaging_reqs
 
 compile_forwarder:
   cmd.run:
     - name: go build
     - cwd: /tmp/logstash-forwarder
+    - require:
+        - git: forwarder_src
 
 package_forwarder:
   cmd.run:
     - name: make {{ package_type }}
     - cwd: /tmp/logstash-forwarder
+    - require:
+        - cmd: compile_forwarder
+        - git: forwarder_src
+        - gem: fpm
 
 move_package:
   file.managed:
     - name: {{ file_root }}/built_packages/logstash-forwarder.{{ package_type }}
     - source: /tmp/logstash-forwarder/{{ package_filename }}
-    - source_hash: {{ salt['cmd.run']('md5sum /tmp/logstash-forwarder{0}'.format(package_filename)) }}
+    - source_hash: {{ salt['cmd.run']('md5sum /tmp/logstash-forwarder/{0}'.format(package_filename)) }}
+    - require:
+        - cmd: package_forwarder
