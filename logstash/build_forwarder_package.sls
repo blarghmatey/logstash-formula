@@ -25,7 +25,7 @@ forwarder_src:
   git.latest:
     - name: https://github.com/elasticsearch/logstash-forwarder
     - rev: {{ git_rev }}
-    - target: /tmp
+    - target: /tmp/logstash-forwarder
     - require:
         - pkg: packaging_reqs
 
