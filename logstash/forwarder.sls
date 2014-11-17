@@ -86,7 +86,7 @@ forwarder_service:
     - name: logstash-forwarder
     - enable: True
     - require:
-        - pkg: logstash-forwarder
+        - pkg: logstash-forwarder_pkg
     - watch:
         - file: lumberjack_config_dir
         - file: base_config
