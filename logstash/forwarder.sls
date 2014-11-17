@@ -38,7 +38,7 @@ logstash-forwarder_pkg :
         {% set package_type = 'rpm' %}
     {% endif %}
     - sources:
-        - logstash-forwarder: salt://built_packages/logstash_forwarder.{{ package_type }}
+        - logstash-forwarder: salt://built_packages/logstash-forwarder.{{ package_type }}
     {% endif %}
 
 lumberjack_config_dir:
