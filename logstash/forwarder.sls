@@ -32,9 +32,9 @@ logstash-forwarder_pkg :
     {% if use_public_pkg_repo %}
     - name: logstash-forwarder
     {% else %}
-    {% if os_family = 'Debian' %}
+    {% if os_family == 'Debian' %}
         {% set package_type = 'deb' %}
-    {% elif os_family = 'RedHat' %}
+    {% elif os_family == 'RedHat' %}
         {% set package_type = 'rpm' %}
     {% endif %}
     - sources:
