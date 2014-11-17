@@ -11,7 +11,7 @@
 {% set logstash_timeout = salt['pillar.get']('logstash-forwarder:logstash_timeout', 15) %}
 {% set use_public_pkg_repo = salt['pillar.get']('logstash-forwarder:use_public_pkg_repo', True) %}
 
-{% if use_public_pkg_repo %}
+{% if use_public_pkg_repo == True %}
 setup_lumberjack_pkg_repo:
   pkgrepo.managed:
     - humanname: Logstash
