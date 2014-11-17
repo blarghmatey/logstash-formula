@@ -9,7 +9,7 @@
 {% endfor %}
 {% set conf_list = salt['pillar.get']('logstash-forwarder:extra_configs', []) %}
 {% set logstash_timeout = salt['pillar.get']('logstash-forwarder:logstash_timeout', 15) %}
-{% set use_public_pkg_repo = salt['pillar.get']('logstash-forwader:use_public_pkg_repo', True) %}
+{% set use_public_pkg_repo = salt['pillar.get']('logstash-forwarder:use_public_pkg_repo', True) %}
 
 {% if use_public_pkg_repo %}
 setup_lumberjack_pkg_repo:
@@ -67,7 +67,7 @@ base_config:
         logstash_servers: {{ logstash_servers }}
         logstash_timeout: {{ logstash_timeout }}
     - require:
-        - file: lumberjack_conf_dir
+        - file: lumberjack_config_dir
 
 {% for config in conf_list %}
 {{ config.name }}:
@@ -88,5 +88,5 @@ forwarder_service:
     - require:
         - pkg: logstash-forwarder
     - watch:
-        - file: lumberjack_conf_dir
+        - file: lumberjack_config_dir
         - file: base_config
