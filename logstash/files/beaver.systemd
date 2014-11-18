@@ -1,0 +1,8 @@
+[Unit]
+Description=Beaver log shipper
+After=network.service
+
+[Service]
+ExecStart=/usr/local/bin/beaver -c /etc/beaver/conf -C /etc/beaver/conf.d -t tcp
+[Install]
+WantedBy=multi-user.target

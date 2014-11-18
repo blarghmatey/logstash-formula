@@ -1,8 +1,10 @@
 {% from "logstash/map.jinja" import logstash with context %}
 
 {% set os_family = grains['os_family'] %}
-{% set use_lumberjack = salt['pillar.get']('logstash:use_lumberjack', True) %}
+{% set use_lumberjack = salt['pillar.get']('logstash:use_lumberjack', False) %}
 {% set lumberjack_port = salt['pillar.get']('logstash-forwarder:port', 7000) %}
+{% set use_beaver = salt['pillar.get']('logstash:use_beaver', True) %}
+{% set beaver_port = salt['pillar.get']('beaver:tcp_port', 7777) %}
 {% set conf_list = salt['pillar.get']('logstash:extra_configs', []) %}
 
 setup_logstash_pkg_repo:
@@ -37,6 +39,8 @@ logstash_config:
         elasticsearch_http_host: {{ salt['pillar.get']('logstash:elasticsearch_http_host') }}
         elasticsearch_http_port: {{ salt['pillar.get']('logstash:elasticsearch_http_port', 9200) }}
         syslog_port: {{ salt['pillar.get']('logstash:syslog_port', 2000) }}
+        use_beaver: {{ use_beaver }}
+        beaver_port: {{ beaver_port }}
 
 {% for config in conf_list %}
 {{ config.name }}:
